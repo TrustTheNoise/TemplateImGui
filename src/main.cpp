@@ -3,7 +3,7 @@
 #include "../headers/imgui.h"
 #include "../headers/imgui_impl_glfw.h"
 #include "../headers/imgui_impl_opengl3.h"
-#include <stdio.h>
+#include <iostream>
 
 int main(int, char**)
 {
@@ -17,8 +17,12 @@ int main(int, char**)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
     GLFWwindow* window
-        = glfwCreateWindow(700, 600, "TaskImGui", nullptr, nullptr);
-    if (window == nullptr) return 1;
+        = glfwCreateWindow(700, 600, "TemplateImGui", nullptr, nullptr);
+    if (window == nullptr) {
+        std::cerr << "Failed to create window";
+        glfwTerminate();
+        return 1;
+    }
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
@@ -27,9 +31,6 @@ int main(int, char**)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
-
-    // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
 
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -42,6 +43,7 @@ int main(int, char**)
     while (!glfwWindowShouldClose(window)) {
         // Poll and handle events (inputs, window resize, etc.)
         glfwPollEvents();
+        glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
@@ -51,8 +53,8 @@ int main(int, char**)
         // Set imgui windows size like opengl window
         int openglWidth, openglHeight;
         glfwGetWindowSize(window, &openglWidth, &openglHeight);
-        ImGui::SetNextWindowSize(ImVec2(openglWidth, openglHeight));
-        ImGui::SetNextWindowPos(ImVec2(0.0, 0.0));
+        ImGui::SetNextWindowSize(ImVec2(openglWidth, openglHeight + 19));
+        ImGui::SetNextWindowPos(ImVec2(0.0, -19.0));
 
         // Start my imgui window
         MyApp::RenderUI();
