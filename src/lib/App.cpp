@@ -1,7 +1,7 @@
 #define STB_IMAGE_IMPLEMENTATION
-#include "../headers/App.h"
-#include "../headers/glfw3.h"
-#include "../headers/imgui.h"
+#include "App.h"
+#include "../../ImGui/glfw3.h"
+#include "../../ImGui/imgui.h"
 
 namespace MyApp {
     void RenderUI()
